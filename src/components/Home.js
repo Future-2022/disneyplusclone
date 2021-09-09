@@ -39,13 +39,13 @@ const Home = (props) => {
     // })
     
     db.collection("sliders").onSnapshot((snapshot) => {
-      snapshot.docs.map((doc) => {
+      snapshot.docs.forEach((doc) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         sliders =[...sliders, { id: doc.id, ...doc.data() }];
       })})
 
     db.collection("movies").onSnapshot((snapshot) => {
-      snapshot.docs.map((doc) => {
+      snapshot.docs.forEach((doc) => {
         // eslint-disable-next-line default-case
         switch (doc.data().type) {
           case "recommend":
