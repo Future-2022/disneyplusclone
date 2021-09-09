@@ -24,12 +24,13 @@ const Detail = (props) => {
   };
 
   return (
-    <Container>
-      <Background>
-        <img alt={detailData.title} src={detailData.backgroundImg} />
-      </Background>
 
-      {!isVideoPlaying ? (
+    <div>
+        {!isVideoPlaying ? (
+        <Container>
+        <Background>
+          <img alt={detailData.title} src={detailData.backgroundImg} />
+        </Background>
         <div>
           <ImageTitle>
             <img alt={detailData.title} src={detailData.titleImg} />
@@ -58,16 +59,19 @@ const Detail = (props) => {
             <Description>{detailData.description}</Description>
           </ContentMeta>
         </div>
+        </Container>
       ) : (
-        <JoLPlayer
+        <JoLPlayer className="video-player"
           option={{
-            width: 750,
-            height: 420,
-            videoSrc: "https://x.com/a.mp4",
+            videoSrc: "https://storage.googleapis.com/13464d6c2205/6e5/3d1b71922aed35fb1f475e28b8004021.mp4",
+            language: "en",
+            theme: "#2d2c2c"
           }}
         />
       )}
-    </Container>
+
+    </div>
+
   );
 };
 
@@ -97,6 +101,7 @@ const Background = styled.div`
     }
   }
 `;
+
 
 const ImageTitle = styled.div`
   align-items: flex-end;

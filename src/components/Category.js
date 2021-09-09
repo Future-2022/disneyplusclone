@@ -27,9 +27,9 @@ const Category = (props) => {
 
   return (
     <Container>
-      <Content>
-        <h4>{category}</h4>
+
         <ContentMeta>
+          
           {movies.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
@@ -39,7 +39,6 @@ const Category = (props) => {
             </Wrap>
           ))}
         </ContentMeta>
-      </Content>
     </Container>
   );
 };
@@ -51,6 +50,7 @@ const Container = styled.main`
   display: block;
   top: 72px;
   padding: 0 calc(3.5vw + 5px);
+  padding-bottom: 50px;
 
   &:after {
     background: url("/images/home-background.png") center center / cover
@@ -64,20 +64,8 @@ const Container = styled.main`
 `;
 
 
-const Content = styled.div`
-  max-width: 874px;
-  display: grid;
-  grid-gap: 25px;
-  gap: 25px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-`;
-
-
 const ContentMeta = styled.div`
+  margin-top:50px;
   display: grid;
   grid-gap: 25px;
   gap: 25px;
