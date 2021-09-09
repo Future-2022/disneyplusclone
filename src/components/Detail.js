@@ -5,28 +5,22 @@ import db from "../firebase";
 import JoLPlayer from "jol-player";
 
 const Detail = (props) => {
+
   const { id } = useParams();
+
   const [detailData, setDetailData] = useState({});
-  props.vidPlaying = false;
+  const [isVideoPlaying, setVideoPlaying] = useState(false)
 
   useEffect(() => {
-    db.collection("movies")
-      .doc(id)
-      .get()
+    db.collection("movies").doc(id).get()
       .then((doc) => {
-        if (doc.exists) {
-          setDetailData(doc.data());
-        } else {
-          console.log("no such document in firebase 🔥");
-        }
+        if (!doc.exists) return console.log("no such document in firebase 🔥")
+        setDetailData({ id: doc.id, ref: doc.ref, ...doc.data() })
       })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-      });
-  }, [id]);
+  }, [id])
 
-  const playMovie = () => {
-    props.vidPlaying = false
+  const handlePlayMovie = () => {
+    setVideoPlaying(true)
   };
 
   return (
@@ -35,44 +29,43 @@ const Detail = (props) => {
         <img alt={detailData.title} src={detailData.backgroundImg} />
       </Background>
 
-      {!props.vidPlaying ? (
+      {!isVideoPlaying ? (
         <div>
           <ImageTitle>
-        <img alt={detailData.title} src={detailData.titleImg} />
-      </ImageTitle>
-      <ContentMeta>
-        <Controls>
-          <Player onClick={playMovie}>
-            <img src="/images/play-icon-black.png" alt="" />
-            <span>Play</span>
-          </Player>
-          <Trailer>
-            <img src="/images/play-icon-white.png" alt="" />
-            <span>Trailer</span>
-          </Trailer>
-          <AddList>
-            <span />
-            <span />
-          </AddList>
-          <GroupWatch>
-            <div>
-              <img src="/images/group-icon.png" alt="" />
-            </div>
-          </GroupWatch>
-        </Controls>
-        <SubTitle>{detailData.subTitle}</SubTitle>
-        <Description>{detailData.description}</Description>
-      </ContentMeta>
+            <img alt={detailData.title} src={detailData.titleImg} />
+          </ImageTitle>
+          <ContentMeta>
+            <Controls>
+              <Player onClick={() => handlePlayMovie()}>
+                <img src="/images/play-icon-black.png" alt="" />
+                <span>Play</span>
+              </Player>
+              <Trailer>
+                <img src="/images/play-icon-white.png" alt="" />
+                <span>Trailer</span>
+              </Trailer>
+              <AddList>
+                <span />
+                <span />
+              </AddList>
+              <GroupWatch>
+                <div>
+                  <img src="/images/group-icon.png" alt="" />
+                </div>
+              </GroupWatch>
+            </Controls>
+            <SubTitle>{detailData.subTitle}</SubTitle>
+            <Description>{detailData.description}</Description>
+          </ContentMeta>
         </div>
       ) : (
-      <JoLPlayer
-        option={{
-          videoSrc:"https://x.com/a.mp4",
-          width: 750,
-          height: 420,
-        }}
-
-      />
+        <JoLPlayer
+          option={{
+            width: 750,
+            height: 420,
+            videoSrc: "https://x.com/a.mp4",
+          }}
+        />
       )}
     </Container>
   );

@@ -1,38 +1,36 @@
-import { componentWillMount, useState } from "react";
+import { useEffect, useState } from "react";
 // import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import db from "../firebase";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { parseSnapshot } from "../helpers";
 
 const Category = (props) => {
-  const { category } = useParams();
-  
-  let [data, setData] = useState([]);
-  const fetchData = async () => { 
-    let movies = [];
-    const snapshot = await db.collection("movies").get()
-    snapshot.forEach(doc => {
-      movies[doc.id] = doc.data();
-    });
 
-    setData(movies);
+  const { category } = useParams();
+
+  let [movies, setMovies] = useState([])
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      db.collection("movies").get()
+        .then(parseSnapshot(movies => {
+          setMovies(movies)
+        }))
     }
 
-    componentWillMount(() => {
-
     fetchData()
-      console.log(data)
-  },[category]);
-  
+
+  }, [category])
 
   return (
     <Container>
       <Content>
         <h4>{category}</h4>
         <ContentMeta>
-        {data.length>0 &&
-          data.map((movie, key) => (
+          {movies.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
               <Link to={`/detail/` + movie.id}>
@@ -40,7 +38,7 @@ const Category = (props) => {
               </Link>
             </Wrap>
           ))}
-        </ContentMeta>  
+        </ContentMeta>
       </Content>
     </Container>
   );
