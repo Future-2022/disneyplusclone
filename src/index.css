@@ -20,6 +20,30 @@ a {
   text-decoration: none;
 }
 
+.search-form {
+  background-color: white;
+  border-radius: 5px!important;
+  padding: 13px 12px 13px 12px;
+}
+.select-form {
+  background-color: white;
+}
+.w-45{
+  width: 48%!important;
+}
+.pt-8 {
+  padding-top: 140px;
+}
+.search-title {
+  font-size: 25px;
+  color: #2c2c2c;
+}
+.border-3 {
+  border-radius: 6px;
+}
+.shadow-search {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.411)!important;
+}
 @media only screen and (min-width: 768px) {
   body {
     font-size: 16px;

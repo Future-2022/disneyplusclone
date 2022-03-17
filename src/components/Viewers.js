@@ -1,33 +1,52 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import React, { useState, useEffect, useRef } from 'react';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import InputUnstyled from '@mui/base/InputUnstyled';
 
 const Viewers = (props) => {
+  let history = useHistory();
+  const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
+  const [yearFrom, setYearFrom] = useState("");
+  const [yearTo, setYearTo] = useState(""); 
+
+  const Search = () => {
+    let url = "/home/search/"+title+"/"+type+"/"+yearFrom+"/"+yearTo;
+    history.push(url);
+  }
   return (
     <Container>
-      <Wrap>
+      {/* <Wrap>
         <Link to={`/category/disney`}>
           <img src="/images/viewers-disney.png" alt="" />
           <video autoPlay={true} loop={true} playsInline={true}>
             <source src="/videos/1564674844-disney.mp4" type="video/mp4" />
           </video>
         </Link>
-      </Wrap>
-      <Wrap>
+      </Wrap> */}
+      {/* <Wrap>
         <Link to={`/category/pixar`}>
           <img src="/images/viewers-pixar.png" alt="" />
           <video autoPlay={true} loop={true} playsInline={true}>
             <source src="/videos/1564676714-pixar.mp4" type="video/mp4" />
           </video>
           </Link>
-      </Wrap>
-      <Wrap>
+      </Wrap> */}
+      {/* <Wrap>
         <Link to={`/category/marvel`}>
           <img src="/images/viewers-marvel.png" alt="" />
           <video autoPlay={true} loop={true} playsInline={true}>
             <source src="/videos/1564676115-marvel.mp4" type="video/mp4" />
           </video>
         </Link>
-      </Wrap>
+      </Wrap> */}
+      <div style={{width:"30%"}}></div>
       <Wrap>
         <Link to={`/category/star-wars`}>
           <img src="/images/viewers-starwars.png" alt="" />
@@ -36,17 +55,29 @@ const Viewers = (props) => {
           </video>
         </Link>
       </Wrap>
-      <Wrap>
-        <Link to={`/category/national`}>
-          <img src="/images/viewers-national.png" alt="" />
-          <video autoPlay={true} loop={true} playsInline={true}>
-            <source
-              src="/videos/1564676296-national-geographic.mp4"
-              type="video/mp4"
-            />
-          </video>
-          </Link>
-      </Wrap>
+      <div style={{width:"200%"}}>
+        <input  id="title" placeholder="Title" className="form-control search-form mt-3 w-100 ml-3"  value={title} onChange={e => setTitle(e.target.value)} />
+        <FormControl fullWidth className="mt-3">
+          <Select
+            labelId="type"
+            id="type"
+            value={type}
+            label="Type"
+            onChange={e => setType(e.target.value)}
+            className="select-form"
+          >
+            <MenuItem value={`new`}>New</MenuItem>
+            <MenuItem value={`original`}>Original</MenuItem>
+            <MenuItem value={`recommend`}>Recommend</MenuItem>
+            <MenuItem value={`trending`}>Trending</MenuItem>
+          </Select>
+        </FormControl>
+        <div className="d-flex justify-content-between">
+          <input  id="yearFrom" placeholder="From [Year]" className="form-control search-form mt-3 w-45 mr-3" value={yearFrom} onChange={e => setYearFrom(e.target.value)} />
+          <input  id="yearTo" placeholder="To [Year]" className="form-control search-form mt-3 w-45 ml-3" value={yearTo} onChange={e => setYearTo(e.target.value)} />
+        </div>
+        <Button onClick={Search} variant="contained" className="mt-3 py-3" fullWidth>Search</Button>
+      </div>
     </Container>
   );
 };
